@@ -38,7 +38,7 @@ const useSidebarLogoStyles = makeStyles({
   },
   link: {
     width: sidebarConfig.drawerWidthClosed,
-    marginLeft: 24,
+    marginLeft: 15,
   },
 });
 
