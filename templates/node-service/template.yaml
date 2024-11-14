@@ -42,7 +42,6 @@ spec:
           orgId: ${{ steps.environment.output.orgId }}
           cloudProvider: ${{ steps.environment.output.cloudProvider }}
           githubOrgId: ${{ steps.environment.output.githubOrgId }}
-          githubOrgName: ${{ steps.environment.output.githubOrgName }}
           
     - id: publish
       name: Publish
@@ -51,7 +50,7 @@ spec:
         allowedHosts: ['github.com']
         defaultBranch: main
         description: This is ${{ parameters.componentName }}
-        repoUrl: github.com?owner=${{ steps.environment.output.githubOrgName }}&repo=${{ parameters.componentName }}
+        repoUrl: github.com?owner=Nagarro-Platform-Engineering&repo=${{ parameters.componentName }}
         repoVisibility: public
         protectDefaultBranch: false
         oidcCustomization: ${{ steps.environment.output.githubOIDCCustomization }}
