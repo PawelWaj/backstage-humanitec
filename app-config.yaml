@@ -64,3 +64,4 @@ humanitec:
   token: ${HUMANITEC_TOKEN}
   cloudProvider: ${CLOUD_PROVIDER}
   githubOrgId: ${GITHUB_ORG_ID}
+  githubOrgName: ${GITHUB_ORG_NAME}
