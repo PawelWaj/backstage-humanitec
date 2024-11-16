@@ -25,6 +25,8 @@ env:
   GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
   GCP_GAR_HOST: ${{ vars.GCP_GAR_HOST }}
   GCP_GAR_NAME: ${{ vars.GCP_GAR_NAME }}
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
   deploy:
@@ -118,8 +120,19 @@ jobs:
       - name: Set Tag with SHA
         run: echo "TAG=`echo $GITHUB_SHA | cut -c 1-7`" >> $GITHUB_ENV
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - run: mkdir credentials && touch credentials/github-app-backstage-humanitec-credentials.yaml
       - run: docker image build -t backstage .
+
+      - name: Push to DockerHub
+        run: |
+          docker tag backstage ${{ env.DOCKERHUB_USERNAME }}/$IMAGE:$TAG
+          docker push ${{ env.DOCKERHUB_USERNAME }}/$IMAGE:$TAG
 
       - name: Push backstage image
         run: |

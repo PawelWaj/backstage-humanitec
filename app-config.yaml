@@ -1,5 +1,5 @@
 app:
-  title: Scaffolded Backstage App
+  title: Nagarro Backstage
   baseUrl: http://localhost:3000
 
 organization:
@@ -22,8 +22,9 @@ backend:
 integrations:
   github:
     - host: github.com
-      apps:
-        - $include: credentials/github-app-backstage-humanitec-credentials.yaml
+      token: ${GITHUB_TOKEN}
+#      apps:
+#        - $include: credentials/github-app-backstage-humanitec-credentials.yaml
 
 proxy:
 
@@ -64,5 +65,6 @@ humanitec:
   orgId: ${HUMANITEC_ORG_ID}
   token: ${HUMANITEC_TOKEN}
   cloudProvider: ${CLOUD_PROVIDER}
+  githubToken: ${GITHUB_TOKEN}
   githubOrgId: ${GITHUB_ORG_ID}
   githubOrgName: ${GITHUB_ORG_NAME}

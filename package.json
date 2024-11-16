@@ -7,8 +7,11 @@
   },
   "scripts": {
     "dev": "NODE_OPTIONS=--no-node-snapshot concurrently \"yarn start\" \"yarn start-backend\"",
+    "dev:local": "NODE_OPTIONS=--no-node-snapshot concurrently \"yarn start:local\" \"yarn start-backend:local\"",
     "start": "NODE_OPTIONS=--no-node-snapshot yarn workspace app start",
     "start-backend": "NODE_OPTIONS=--no-node-snapshot yarn workspace backend start",
+    "start-backend:local": "NODE_OPTIONS=--no-node-snapshot yarn workspace backend start --config ../../app-config.yaml --config ../../app-config.local.yaml",
+    "start:local": "NODE_OPTIONS=--no-node-snapshot yarn workspace app start --config ../../app-config.yaml --config ../../app-config.local.yaml",
     "build:backend": "NODE_OPTIONS=--no-node-snapshot yarn workspace backend build",
     "build:all": "backstage-cli repo build --all",
     "build-image": "DOCKER_BUILDKIT=1 docker image build . -f packages/backend/Dockerfile --tag backstage",
