@@ -120,16 +120,18 @@ jobs:
       - name: Set Tag with SHA
         run: echo "TAG=`echo $GITHUB_SHA | cut -c 1-7`" >> $GITHUB_ENV
 
+      - run: mkdir credentials && touch credentials/github-app-backstage-humanitec-credentials.yaml
+      - run: docker image build -t backstage .
+
       - name: Login to DockerHub
+        if: ${{ env.DOCKERHUB_USERNAME && secrets.DOCKERHUB_TOKEN }}
         uses: docker/login-action@v3
         with:
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - run: mkdir credentials && touch credentials/github-app-backstage-humanitec-credentials.yaml
-      - run: docker image build -t backstage .
-
       - name: Push to DockerHub
+        if: ${{ env.DOCKERHUB_USERNAME && secrets.DOCKERHUB_TOKEN }}
         run: |
           docker tag backstage ${{ env.DOCKERHUB_USERNAME }}/$IMAGE:$TAG
           docker push ${{ env.DOCKERHUB_USERNAME }}/$IMAGE:$TAG
