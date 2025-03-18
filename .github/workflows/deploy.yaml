@@ -123,7 +123,7 @@ jobs:
 
       - name: Pull backstage image from GHCR
         run: |
-            docker pull $IMAGE:TAG
+          docker pull $IMAGE:$TAG
 
       - name: Push backstage image to local registry
         run: |
