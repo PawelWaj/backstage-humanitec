@@ -8,8 +8,7 @@ on:
 concurrency: ${{ github.ref }}
 
 env:
-  IMAGE: ghcr.io/pawelwaj/backstage-humanitex/backstage
-  TAG: latest
+  IMAGE: backstage
   HUMCTL_VERSION: '*'
   HUMANITEC_APP_ID: backstage
   SCORE_FILE: score.yaml
@@ -119,13 +118,26 @@ jobs:
           echo "SCORE_FILE=score.5min.yaml" >> "$GITHUB_ENV"
           echo "DEPLOYMENT_ENV=5min-local" >> "$GITHUB_ENV"
 
+      - name: Set Tag with SHA
+        run: echo "TAG=`echo $GITHUB_SHA | cut -c 1-7`" >> $GITHUB_ENV
+
       - run: mkdir credentials && touch credentials/github-app-backstage-humanitec-credentials.yaml
+      - run: docker image build -t backstage .
 
-      - name: Pull backstage image from GHCR
+      - name: Login to DockerHub
+        if: ${{ env.DOCKERHUB_USERNAME && secrets.DOCKERHUB_TOKEN }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push to DockerHub
+        if: ${{ env.DOCKERHUB_USERNAME && secrets.DOCKERHUB_TOKEN }}
         run: |
-            docker pull $IMAGE:TAG
+          docker tag backstage ${{ env.DOCKERHUB_USERNAME }}/$IMAGE:$TAG
+          docker push ${{ env.DOCKERHUB_USERNAME }}/$IMAGE:$TAG
 
-      - name: Push backstage image to local registry
+      - name: Push backstage image
         run: |
           docker tag backstage $CONTAINER_REGISTRY/$IMAGE:$TAG
           docker push $CONTAINER_REGISTRY/$IMAGE:$TAG
