@@ -1,6 +1,7 @@
 name: Deploy Backstage
 
 on:
+  workflow_dispatch:
   push:
     branches: 'main'
 
