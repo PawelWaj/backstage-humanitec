@@ -69,3 +69,7 @@ resources:
       port: 7007
   db:
     type: postgres
+    resources:
+  config:
+    files:
+      catalog-info.yaml: ${values.env.CATALOG_INFO_BASE64 | b64dec}
