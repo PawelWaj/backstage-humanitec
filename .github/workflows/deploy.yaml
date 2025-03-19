@@ -127,8 +127,8 @@ jobs:
 
       - name: Push backstage image to local registry
         run: |
-          docker tag backstage $CONTAINER_REGISTRY/$IMAGE:$TAG
-          docker push $CONTAINER_REGISTRY/$IMAGE:$TAG
+          docker tag $REGISTRY_GHCR/$IMAGE:$TAG $CONTAINER_REGISTRY/$IMAGE:$TAG
+          docker push $CONTAINER_REGISTRY/$IMAGE:$TAG     
 
       - uses: humanitec/setup-cli-action@v1
         with:

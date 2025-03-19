@@ -53,7 +53,7 @@ jobs:
         run: |
           humctl create environment ${{ env.ENVIRONMENT_ID }} \
               --token ${{ secrets.HUMANITEC_TOKEN }} \
-              --org ${{ vars.HUMANITEC_ORG_ID }} \
+              --org ${{ vars. }} \
               --app ${{ env.APP_NAME }} \
               --name ${{ env.ENVIRONMENT_NAME }} \
               -t ${{ env.ENVIRONMENT_TYPE }} \
@@ -124,7 +124,7 @@ jobs:
         run: |
           humctl score deploy \
               --token ${{ secrets.HUMANITEC_TOKEN }} \
-              --org ${{ vars.HUMANITEC_ORG_ID }} \
+              --org ${{ vars. }} \
               --app ${{ env.APP_NAME }} \
               --env ${{ env.ENVIRONMENT_ID }} \
               -f score.yaml \
@@ -138,21 +138,21 @@ jobs:
         run: |
           DEPLOYMENT_ID=$(humctl get deployment . -o json \
               --token ${{ secrets.HUMANITEC_TOKEN }} \
-              --org ${{ vars.HUMANITEC_ORG_ID}} \
+              --org ${{ vars.}} \
               --app ${{ env.APP_NAME }} \
               --env ${{ env.ENVIRONMENT_ID }} \
               | jq -r .metadata.id)
-          ENV_URL="https://app.humanitec.io/orgs/"${{ vars.HUMANITEC_ORG_ID }}"/apps/"${{ env.APP_NAME }}"/envs/"${{ env.ENVIRONMENT_ID }}"/deploys/"${DEPLOYMENT_ID}
+          ENV_URL="https://app.humanitec.io/orgs/"${{ vars. }}"/apps/"${{ env.APP_NAME }}"/envs/"${{ env.ENVIRONMENT_ID }}"/deploys/"${DEPLOYMENT_ID}
           DOMAINS=$(humctl get active-resources \
                       --token ${{ secrets.HUMANITEC_TOKEN }} \
-                      --org ${{ vars.HUMANITEC_ORG_ID }} \
+                      --org ${{ vars. }} \
                       --app ${{ env.APP_NAME }} \
                       --env ${{ env.ENVIRONMENT_ID }} -o json \
                       | jq -r '. | map(. | select(.metadata.type == "dns")) | map((.metadata.res_id | split(".") | .[1]) + ": [" + .status.resource.host + "](https://" + .status.resource.host + ")") | join("\n")')
 
           DEPLOYMENT_ERRORS=$(humctl get deployment-error \
               --token ${{ secrets.HUMANITEC_TOKEN }} \
-              --org ${{ vars.HUMANITEC_ORG_ID }} \
+              --org ${{ vars. }} \
               --app ${{ env.APP_NAME }} \
               --env ${{ env.ENVIRONMENT_ID }} -o json)
           if [ "$DEPLOYMENT_ERRORS" = "[]" ]; then
@@ -198,7 +198,7 @@ jobs:
           echo "" >> pr_message.txt
           humctl diff sets env/${{ env.ENVIRONMENT_ID }} env/${{ env.BASE_ENVIRONMENT }} \
               --token ${{ secrets.HUMANITEC_TOKEN }} \
-              --org ${{ vars.HUMANITEC_ORG_ID }} \
+              --org ${{ vars. }} \
               --app ${{ env.APP_NAME }} -o json >> pr_message.txt
           echo "" >> pr_message.txt
           echo '```' >> pr_message.txt
@@ -214,7 +214,7 @@ jobs:
             humctl resources active-resource-usage \
                 --env ${{ env.ENVIRONMENT_ID }} \
                 --token ${{ secrets.HUMANITEC_TOKEN }} \
-                --org ${{ vars.HUMANITEC_ORG_ID }} \
+                --org ${{ vars. }} \
                 --app ${{ env.APP_NAME }} >> pr_message.txt
             echo "" >> pr_message.txt
             echo '```' >> pr_message.txt
@@ -230,7 +230,7 @@ jobs:
             humctl resources graph \
                 --env ${{ env.ENVIRONMENT_ID }} \
                 --token ${{ secrets.HUMANITEC_TOKEN }} \
-                --org ${{ vars.HUMANITEC_ORG_ID }} \
+                --org ${{ vars. }} \
                 --app ${{ env.APP_NAME }} >> pr_message.txt
             echo "" >> pr_message.txt
             echo '```' >> pr_message.txt
