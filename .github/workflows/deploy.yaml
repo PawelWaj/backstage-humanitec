@@ -53,6 +53,12 @@ jobs:
           # Ensure correct humanitec org
           # sed -i 's/humanitec-architecture/${{ vars.HUMANITEC_ORG_ID }}/g' catalog-info.yaml
           sed -i 's/\("humanitec.com\/orgId":\) "[^"]*"/\1 ${{ vars.HUMANITEC_ORG_ID }}/' catalog-info.yaml
+
+      - name: Encode `catalog-info.yaml`
+        run: |
+          export CATALOG_INFO_BASE64=$(base64 -w 0 catalog-info.yaml)
+          echo "CATALOG_INFO_BASE64=$CATALOG_INFO_BASE64" >> $GITHUB_ENV
+      
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           file_pattern: 'catalog-info.yaml templates/*.yaml'
@@ -157,4 +163,5 @@ jobs:
             --extensions humanitec.score.yaml \
             --workload-source-url "https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/score.yaml" \
             --image $CONTAINER_REGISTRY/$IMAGE:$TAG \
-            --message "${{ github.event.head_commit.message }}"
+            --message "${{ github.event.head_commit.message }}" \
+            --values env.CATALOG_INFO_BASE64="${{ env.CATALOG_INFO_BASE64 }}"
