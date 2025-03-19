@@ -8,8 +8,9 @@ on:
 concurrency: ${{ github.ref }}
 
 env:
-  IMAGE: ghcr.io/pawelwaj/backstage-humanitex/backstage
+  IMAGE: backstage
   TAG: latest
+  REGISTRY_GHCR: ghcr.io/pawelwaj/backstage-humanitex
   HUMCTL_VERSION: '*'
   HUMANITEC_APP_ID: backstage
   SCORE_FILE: score.yaml
@@ -123,7 +124,7 @@ jobs:
 
       - name: Pull backstage image from GHCR
         run: |
-          docker pull $IMAGE:$TAG
+          docker pull $REGISTRY_GHCR/$IMAGE:$TAG
 
       - name: Push backstage image to local registry
         run: |
