@@ -55,7 +55,7 @@ containers:
           webhookSecret: ${resources.env.GITHUB_APP_WEBHOOK_SECRET}
           privateKey: |
             ${resources.env.GITHUB_APP_PRIVATE_KEY}
-      - target: /catalog-info.yaml  # Mount the catalog-info.yaml file
+      - target: tmp/catalog-info.yaml  # Mount the catalog-info.yaml file
         mode: "0644"
         content: |
           metadata:

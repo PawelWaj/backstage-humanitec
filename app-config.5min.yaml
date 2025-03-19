@@ -45,7 +45,7 @@ catalog:
     - allow: [Component, System, API, Resource, Location, Template]
   locations:
     - type: file
-      target: /tmp/catalog-info.yaml
+      target: tmp/catalog-info.yaml
     - type: file
       target: templates/node-service/template.yaml
     - type: file
