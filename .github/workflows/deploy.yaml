@@ -50,8 +50,8 @@ jobs:
       - name: Configure correct org after copying from template
         run: |
           # Ensure correct humanitec org
-          sed -i 's/humanitec-architecture/${{ vars.HUMANITEC_ORG_ID }}/g' catalog-info.yaml
-
+          # sed -i 's/humanitec-architecture/${{ vars.HUMANITEC_ORG_ID }}/g' catalog-info.yaml
+          sed -i 's/\("humanitec.com\/orgId":\) "[^"]*"/\1 ${{ vars.HUMANITEC_ORG_ID }}/' catalog-info.yaml
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           file_pattern: 'catalog-info.yaml templates/*.yaml'
