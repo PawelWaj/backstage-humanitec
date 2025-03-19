@@ -59,6 +59,10 @@ jobs:
           export CATALOG_INFO_BASE64=$(base64 -w 0 catalog-info.yaml)
           echo "CATALOG_INFO_BASE64=$CATALOG_INFO_BASE64" >> $GITHUB_ENV
       
+      - name: Create Overrides JSON File
+        run: |
+          echo '{ "env": { "CATALOG_INFO_BASE64": "'"$(cat catalog-info.b64)"'" } }' > overrides.json   
+      
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           file_pattern: 'catalog-info.yaml templates/*.yaml'
@@ -164,4 +168,4 @@ jobs:
             --workload-source-url "https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/score.yaml" \
             --image $CONTAINER_REGISTRY/$IMAGE:$TAG \
             --message "${{ github.event.head_commit.message }}" \
-            --values env.CATALOG_INFO_BASE64="${{ env.CATALOG_INFO_BASE64 }}"
+            --overrides overrides.json  
