@@ -1,5 +1,5 @@
 app:
-  baseUrl: http://localhost:7007
+  baseUrl: http://backstage.localhost
 
 backend:
   baseUrl: http://localhost:7007
