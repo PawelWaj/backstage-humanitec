@@ -91,6 +91,7 @@ COPY --from=build --chown=node:node /app/packages/backend/dist/bundle/ ./
 # Copy any other files that we need at runtime
 COPY --chown=node:node app-config.yaml app-config.production.yaml app-config.5min.yaml ./
 COPY --chown=node:node catalog-info.yaml ./
+COPY --chown=node:node entrypoint.sh ./
 COPY --chown=node:node templates templates
 COPY --chown=node:node examples examples
 
@@ -100,4 +101,9 @@ ENV NODE_ENV=production
 # This disables node snapshot for Node 20 to work with the Scaffolder
 ENV NODE_OPTIONS="--no-node-snapshot"
 
-CMD ["node", "packages/backend", "--config", "app-config.yaml"]
+# Ensure the script has execution permissions
+RUN chmod +x entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["entrypoint.sh"]
+#CMD ["node", "packages/backend", "--config", "app-config.yaml"]
