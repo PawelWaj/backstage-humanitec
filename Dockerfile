@@ -105,5 +105,5 @@ ENV NODE_OPTIONS="--no-node-snapshot"
 RUN chmod +x entrypoint.sh
 
 # Set the entrypoint
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
 #CMD ["node", "packages/backend", "--config", "app-config.yaml"]

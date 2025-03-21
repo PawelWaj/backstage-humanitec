@@ -37,20 +37,6 @@ containers:
       POSTGRES_USER: ${resources.db.username}
       CLOUD_PROVIDER: ${resources.env.CLOUD_PROVIDER}
       NODE_TLS_REJECT_UNAUTHORIZED: "0"
-    files:
-      - target: catalog-info.yaml  # Mount the catalog-info.yaml file
-        mode: "0644"
-        content: |
-          metadata:
-            name: backstage
-            description: An example of a Backstage application.
-            annotations:
-              "humanitec.com/orgId": "dupa"
-              "humanitec.com/appId": "backstage"
-          spec:
-            type: website
-            owner: user:guest
-            lifecycle: experimental     
 resources:
   env:
     type: environment
