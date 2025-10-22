@@ -4,13 +4,11 @@ metadata:
   name: demo-jira-component
   annotations:
     # Required: Jira project key (makes tab appear)
-    jira/project-key: ETP
+    jira.com/project-key: ETP
     
     # Optional: Filter ID (filters which issues to show)
-    jira/filter-id: "10566"
+    jira.com/filter-ids: "10566"
     
-    # Optional: Component name in Jira
-    jira/component: backend
 
 spec:
   type: website
