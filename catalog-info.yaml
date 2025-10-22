@@ -1,16 +1,15 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: demo-jira-component
+  name: backstage
+  description: An example of a Backstage application.
+
+
   annotations:
-    # Required: Jira project key (makes tab appear)
-    jira.com/project-key: ETP
-    
-    # Optional: Filter ID (filters which issues to show)
-    jira.com/filter-ids: "10566"
-    
+    "humanitec.com/orgId": "__HUMANITEC_ORG_ID__"
+    "humanitec.com/appId": "backstage"
 
 spec:
   type: website
-  owner: john@example.com
+  owner: user:guest
   lifecycle: experimental
